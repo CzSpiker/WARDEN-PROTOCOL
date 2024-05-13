@@ -125,7 +125,29 @@ Finally, we're ready to submit the transaction to create the validator:
     --chain-id=buenavista-1 \
     --fees=500uward
 
-Explorer
+# Create Service
+```
+sudo tee /etc/systemd/system/wardend.service > /dev/null << EOF
+[Unit]
+Description=Warden Node
+After=network-online.target
+StartLimitIntervalSec=0
+[Service]
+User=$USER
+Restart=always
+RestartSec=3
+LimitNOFILE=65535
+ExecStart=/usr/local/bin/wardend start
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+```
+sudo systemctl daemon-reload
+sudo systemctl enable wardend
+```
+
+# Explorer
 
     https://explorer.nodesync.top/Warden-Testnet/staking
 
